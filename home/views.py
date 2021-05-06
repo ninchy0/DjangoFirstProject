@@ -4,38 +4,37 @@ from .models import *
 
 # Create your views here.
 def home(request):
-    return render(request, 'index.html')
+    views = {}
+    views['reviews'] = Review.objects.all()
+    return render(request, 'index.html', views)
 
 
 def about(request):
-    return render(request, 'about.html')
+    views = {}
+    views['reviews'] = Review.objects.all()
 
-
-def blog_home(request):
-    return render(request, 'blog-home.html')
-
-
-def blog_single(request):
-    return render(request, 'blog-single.html')
+    return render(request,'about.html',views)
 
 
 def contact(request):
+    views = {}
+    views['informations'] = Information.objects.all()
     if request.method == "POST":
         my_name = request.POST['name']
         my_email = request.POST['email']
         my_subject = request.POST['subject']
         my_message = request.POST['message']
-        data = Contact.object.create(
-            name=my_name,
-            email=my_email,
-            subject=my_subject,
-            message=my_message
+        data = Contact.objects.create(
+            name = my_name,
+            email = my_email,
+            subject = my_subject,
+            message = my_message
         )
         data.save()
-        message = {"msg":"The message is sent. Thank You"}
-        return render(request, 'contact.html', message)
+        views['message'] = "The message is sent. Thank You"
+        return render(request, 'contact.html', views)
 
-    return render(request, 'contact.html')
+    return render(request, 'contact.html',views)
 
 
 def portfolio(request):
@@ -52,3 +51,11 @@ def services(request):
 
 def elements(request):
     return render(request, 'elements.html')
+
+
+def blog_home(request):
+    return render(request, 'blog-home.html')
+
+
+def blog_single(request):
+    return render(request, 'blog-single.html')

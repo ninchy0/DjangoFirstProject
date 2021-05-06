@@ -19,4 +19,14 @@ class Review(models.Model):
     review = models.TextField()
 
     def __str__(self):
-        return self.name
+        return f"{self.name} {self.post}"
+
+class Information(models.Model):
+    address = models.TextField()
+    tole = models.TextField()
+    phone = models.IntegerField()
+    time = models.CharField(max_length = 500)
+    email = models.CharField(max_length = 300)
+
+    def __str__(self):
+        return self.address
